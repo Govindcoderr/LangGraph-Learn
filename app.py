@@ -11,12 +11,14 @@ from langgraph.graph import StateGraph, END
 from langchain_groq import ChatGroq
 import os
 import re
+import dotenv
 
+dotenv.load_dotenv()
 # -----------------------------
 # 1️⃣ SET YOUR GROQ API KEY
 # -----------------------------
 
-os.environ["GROQ_API_KEY"] = "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"
+os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
 
 llm = ChatGroq(
      model="openai/gpt-oss-120b"

@@ -1,10 +1,5 @@
 
-
-
-
-# ==============================
 # FINAL WORKING LANGGRAPH + GROQ
-# ==============================
 
 from typing import TypedDict
 from langgraph.graph import StateGraph, END
@@ -14,9 +9,9 @@ import re
 import dotenv
 
 dotenv.load_dotenv()
-# -----------------------------
+#
 # 1️⃣ SET YOUR GROQ API KEY
-# -----------------------------
+#
 
 os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
 
@@ -24,9 +19,9 @@ llm = ChatGroq(
      model="openai/gpt-oss-120b"
 )
 
-# -----------------------------
+#
 # 2️⃣ DEFINE STATE
-# -----------------------------
+#
 
 class State(TypedDict):
     question: str
@@ -34,9 +29,9 @@ class State(TypedDict):
     attempts: int
 
 
-# -----------------------------
+#
 # 3️⃣ MATH NODE
-# -----------------------------
+#
 
 def math_node(state: State):
     print("🔢 Running Math Node")
@@ -56,9 +51,9 @@ def math_node(state: State):
         return {"answer": "Invalid math expression"}
 
 
-# -----------------------------
+#
 # 4️⃣ LLM NODE
-# -----------------------------
+#
 
 def llm_node(state: State):
     print("🤖 Running LLM Node (Groq)")
@@ -71,9 +66,9 @@ def llm_node(state: State):
     }
 
 
-# -----------------------------
+#
 # 5️⃣ ROUTER (START DECISION)
-# -----------------------------
+#
 
 def router(state: State):
     print("🧭 Routing Question")
@@ -84,9 +79,9 @@ def router(state: State):
     return "llm_node"
 
 
-# -----------------------------
+#
 # 6️⃣ QUALITY CHECK (LOOP)
-# -----------------------------
+#
 
 def quality_check(state: State):
     print("✅ Checking Answer Quality")
@@ -98,9 +93,9 @@ def quality_check(state: State):
     return END
 
 
-# -----------------------------
+#
 # 7️⃣ BUILD GRAPH (CLEAN)
-# -----------------------------
+#
 
 builder = StateGraph(State)
 
@@ -121,9 +116,9 @@ builder.add_conditional_edges("llm_node", quality_check)
 graph = builder.compile()
 
 
-# -----------------------------
+#
 # 8️⃣ RUN APP
-# -----------------------------
+#
 
 if __name__ == "__main__":
 
